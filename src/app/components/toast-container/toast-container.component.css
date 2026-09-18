@@ -1,0 +1,120 @@
+:host {
+  display: contents;
+}
+
+.toast-stack {
+  position: fixed;
+  top: 1.25rem;
+  right: 1.25rem;
+  z-index: 9999;
+  display: flex;
+  flex-direction: column;
+  gap: 0.625rem;
+  max-width: 380px;
+  width: calc(100% - 2.5rem);
+  pointer-events: none;
+}
+
+.toast-item {
+  pointer-events: auto;
+  padding: 0.875rem 1rem;
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-lg);
+  border: 1px solid transparent;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  animation: slideIn 0.25s var(--ease);
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+.toast-success {
+  background: rgba(236, 253, 245, 0.96);
+  border-color: #a7f3d0;
+  color: #065f46;
+}
+
+.toast-error {
+  background: rgba(254, 242, 242, 0.96);
+  border-color: #fecaca;
+  color: #991b1b;
+}
+
+.toast-warning {
+  background: rgba(255, 251, 235, 0.96);
+  border-color: #fde68a;
+  color: #92400e;
+}
+
+.toast-info {
+  background: rgba(239, 246, 255, 0.96);
+  border-color: #bfdbfe;
+  color: #1e40af;
+}
+
+.toast-icon-box {
+  margin-top: 1px;
+  flex-shrink: 0;
+}
+
+.toast-svg {
+  width: 18px;
+  height: 18px;
+}
+
+.toast-success .toast-svg { color: #059669; }
+.toast-error .toast-svg { color: #dc2626; }
+.toast-warning .toast-svg { color: #d97706; }
+.toast-info .toast-svg { color: #2563eb; }
+
+.toast-text-box {
+  flex: 1;
+  font-size: 0.8125rem;
+}
+
+.toast-title {
+  font-weight: 700;
+  margin-bottom: 0.15rem;
+  line-height: 1.2;
+}
+
+.toast-message {
+  font-size: 0.75rem;
+  opacity: 0.9;
+  line-height: 1.4;
+}
+
+.toast-close-btn {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  opacity: 0.5;
+  padding: 2px;
+  border-radius: var(--radius-sm);
+  color: inherit;
+  transition: opacity 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.toast-close-btn:hover {
+  opacity: 1;
+}
+
+.toast-close-svg {
+  width: 14px;
+  height: 14px;
+}

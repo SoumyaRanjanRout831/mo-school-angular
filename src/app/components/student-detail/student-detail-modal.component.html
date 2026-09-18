@@ -1,0 +1,197 @@
+<div *ngIf="student" class="modal-backdrop" (click)="onBackdropClick($event)">
+  <div class="modal-content modal-lg" (click)="$event.stopPropagation()">
+    <!-- Hero Banner -->
+    <div class="profile-hero">
+      <button
+        (click)="close.emit()"
+        class="modal-close-btn"
+        title="Close"
+      >
+        <svg class="close-svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+        </svg>
+      </button>
+
+      <div class="hero-content">
+        <!-- Avatar -->
+        <div class="hero-avatar-box">
+          <img
+            *ngIf="student.profileImageUrl"
+            [src]="student.profileImageUrl"
+            [alt]="student.firstName"
+            class="hero-avatar-img"
+            (error)="student.profileImageUrl = ''"
+          />
+          <span *ngIf="!student.profileImageUrl" class="hero-initials">
+            {{ student.firstName[0] }}{{ student.lastName[0] }}
+          </span>
+        </div>
+
+        <!-- Name & Status -->
+        <div class="hero-info">
+          <div class="hero-title-row">
+            <h2 class="hero-name">{{ student.firstName }} {{ student.lastName }}</h2>
+            <span
+              class="badge"
+              [ngClass]="{
+                'badge-active': student.status === 'Active',
+                'badge-inactive': student.status === 'Inactive',
+                'badge-suspended': student.status === 'Suspended',
+                'badge-graduated': student.status === 'Graduated',
+                'badge-transferred': student.status === 'Transferred'
+              }"
+            >
+              <span class="badge-dot"></span>
+              {{ student.status }}
+            </span>
+          </div>
+
+          <div class="hero-meta-row">
+            <span>Roll <strong>#{{ student.rollNumber }}</strong></span>
+            <span class="dot-sep">&bull;</span>
+            <span>Adm <strong>{{ student.admissionNumber }}</strong></span>
+            <span class="dot-sep">&bull;</span>
+            <span>Grade <strong>{{ student.grade }}-{{ student.section }}</strong></span>
+          </div>
+        </div>
+
+        <!-- Edit CTA -->
+        <div class="hero-cta">
+          <button (click)="edit.emit(student)" class="btn btn-secondary btn-hero-edit">
+            <svg class="btn-icon-svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+            </svg>
+            Edit Profile
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Body Information -->
+    <div class="detail-body">
+      <!-- Section: Academic & Personal -->
+      <div class="detail-section">
+        <h4 class="section-heading">Academic & Personal Profile</h4>
+        <div class="grid-quad">
+          <div class="info-tile">
+            <span class="tile-label">Class Placement</span>
+            <span class="tile-value">Grade {{ student.grade }} (Section {{ student.section }})</span>
+          </div>
+          <div class="info-tile">
+            <span class="tile-label">Gender</span>
+            <span class="tile-value">{{ student.gender }}</span>
+          </div>
+          <div class="info-tile">
+            <span class="tile-label">Date of Birth</span>
+            <span class="tile-value">{{ student.dateOfBirth }}</span>
+          </div>
+          <div class="info-tile">
+            <span class="tile-label">Blood Group</span>
+            <span class="tile-value">{{ student.bloodGroup || 'Not Recorded' }}</span>
+          </div>
+          <div class="info-tile">
+            <span class="tile-label">Student Email</span>
+            <span class="tile-value truncate" [title]="student.email">{{ student.email }}</span>
+          </div>
+          <div class="info-tile">
+            <span class="tile-label">Primary Phone</span>
+            <span class="tile-value">{{ student.phone }}</span>
+          </div>
+          <div class="info-tile">
+            <span class="tile-label">Academic Year</span>
+            <span class="tile-value">{{ student.academicYear }}</span>
+          </div>
+          <div class="info-tile">
+            <span class="tile-label">Admission Date</span>
+            <span class="tile-value">{{ student.admissionDate }}</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Section: Guardian & Emergency Contacts -->
+      <div class="detail-section">
+        <h4 class="section-heading">Guardian & Emergency Contacts</h4>
+        <div class="grid-dual">
+          <!-- Guardian Box -->
+          <div class="contact-box guardian-box">
+            <div class="contact-box-header">
+              <div class="contact-badge-icon icon-g">G</div>
+              <h5 class="contact-box-title">Primary Guardian</h5>
+            </div>
+            <div class="contact-box-list">
+              <div class="contact-row">
+                <span class="c-label">Name:</span>
+                <strong class="c-val">{{ student.guardian.name }} ({{ student.guardian.relation }})</strong>
+              </div>
+              <div class="contact-row">
+                <span class="c-label">Phone:</span>
+                <strong class="c-val font-mono">{{ student.guardian.phone }}</strong>
+              </div>
+              <div class="contact-row">
+                <span class="c-label">Email:</span>
+                <span class="c-val">{{ student.guardian.email }}</span>
+              </div>
+              <div *ngIf="student.guardian.occupation" class="contact-row">
+                <span class="c-label">Occupation:</span>
+                <span class="c-val">{{ student.guardian.occupation }}</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Emergency Contact Box -->
+          <div class="contact-box emergency-box">
+            <div class="contact-box-header">
+              <div class="contact-badge-icon icon-e">E</div>
+              <h5 class="contact-box-title">Emergency Contact</h5>
+            </div>
+            <div class="contact-box-list">
+              <div class="contact-row">
+                <span class="c-label">Contact Person:</span>
+                <strong class="c-val">{{ student.emergencyContact.name }}</strong>
+              </div>
+              <div class="contact-row">
+                <span class="c-label">Relationship:</span>
+                <span class="c-val">{{ student.emergencyContact.relation }}</span>
+              </div>
+              <div class="contact-row">
+                <span class="c-label">Hotline Phone:</span>
+                <strong class="c-val font-mono emergency-phone">{{ student.emergencyContact.phone }}</strong>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Section: Residence -->
+      <div class="detail-section">
+        <h4 class="section-heading">Residential Address</h4>
+        <div class="address-tile">
+          <svg class="address-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+          </svg>
+          <span class="address-text">
+            {{ student.address.street }}, {{ student.address.city }}, {{ student.address.state }} &bull; {{ student.address.postalCode }}, {{ student.address.country }}
+          </span>
+        </div>
+      </div>
+
+      <!-- Section: Notes -->
+      <div *ngIf="student.notes" class="notes-tile">
+        <div class="notes-header">
+          <svg class="notes-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+          </svg>
+          <span>Achievements & Remarks</span>
+        </div>
+        <p class="notes-body">{{ student.notes }}</p>
+      </div>
+    </div>
+
+    <!-- Modal Footer -->
+    <div class="modal-footer">
+      <span class="footer-timestamp">Enrolled: {{ student.createdAt | date:'mediumDate' }}</span>
+      <button (click)="close.emit()" class="btn btn-secondary">Close</button>
+    </div>
+  </div>
+</div>

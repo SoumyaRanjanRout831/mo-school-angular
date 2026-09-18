@@ -1,0 +1,57 @@
+:host {
+  display: contents;
+}
+
+.delete-modal-box {
+  max-width: 440px;
+  padding: 2rem;
+  text-align: center;
+}
+
+.danger-icon-circle {
+  width: 58px;
+  height: 58px;
+  border-radius: var(--radius-full);
+  background: #fee2e2;
+  color: #dc2626;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 1.25rem auto;
+  box-shadow: 0 4px 12px rgba(220, 38, 38, 0.15);
+}
+
+.danger-svg {
+  width: 28px;
+  height: 28px;
+}
+
+.delete-modal-title {
+  font-size: 1.25rem;
+  font-weight: 800;
+  color: var(--slate-900);
+  margin-bottom: 0.5rem;
+}
+
+.delete-modal-desc {
+  font-size: 0.8125rem;
+  color: var(--slate-500);
+  line-height: 1.5;
+  margin-bottom: 1.75rem;
+}
+
+.highlight-name {
+  color: var(--slate-900);
+}
+
+.delete-actions-row {
+  display: flex;
+  gap: 0.75rem;
+}
+
+.btn-cancel-delete,
+.btn-confirm-delete {
+  flex: 1;
+  font-size: 0.8125rem;
+  padding: 0.65rem 1rem;
+}

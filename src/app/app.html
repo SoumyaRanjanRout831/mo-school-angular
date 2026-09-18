@@ -1,0 +1,97 @@
+<div class="app-layout">
+  <!-- Top Navigation Bar -->
+  <app-navbar (createStudent)="openCreateModal()"></app-navbar>
+
+  <!-- Main Content Area -->
+  <main class="main-content">
+    <div class="container">
+      <!-- Section Header -->
+      <section class="section-header">
+        <div class="header-titles">
+          <div class="header-badge">
+            <span class="live-dot"></span>
+            Academic Year 2024-2025
+          </div>
+          <h2 class="header-title">Student Management Roster</h2>
+          <p class="header-subtitle">
+            Centralized hub for managing student profiles, class rosters, contact info, and enrollment metrics.
+          </p>
+        </div>
+
+        <div class="header-actions">
+          <button (click)="loadStudents(); loadStats();" class="btn btn-secondary btn-refresh" title="Reload Records">
+            <svg class="refresh-icon" [class.spinning]="isLoading" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+            </svg>
+            <span>Sync Data</span>
+          </button>
+          <button (click)="openCreateModal()" class="btn btn-primary btn-enroll">
+            <svg class="icon-sm" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
+            </svg>
+            <span>Enroll New Student</span>
+          </button>
+        </div>
+      </section>
+
+      <!-- Stats Overview KPI Cards -->
+      <app-stats-overview
+        [stats]="stats"
+        (filterStatus)="onFilterStatus($event)"
+      ></app-stats-overview>
+
+      <!-- Student Directory List -->
+      <app-student-list
+        [students]="students"
+        [pagination]="pagination"
+        [filters]="filters"
+        [isLoading]="isLoading"
+        (filterChange)="onFilterChange($event)"
+        (viewStudent)="openDetailModal($event)"
+        (editStudent)="openEditModal($event)"
+        (deleteStudent)="openDeleteModal($event)"
+        (createStudent)="openCreateModal()"
+        (statusChange)="onStatusChange($event)"
+      ></app-student-list>
+    </div>
+  </main>
+
+  <!-- App Footer -->
+  <footer class="app-footer">
+    <div class="container footer-inner">
+      <p class="footer-copy">
+        &copy; 2025-2026 <strong>EduPulse</strong> &bull; School Management System
+      </p>
+      <div class="footer-tags">
+        <span class="tech-tag">TypeScript</span>
+        <span class="tech-tag">Express REST</span>
+        <span class="tech-tag">Angular Standalone</span>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Modal Dialogs -->
+  <app-student-detail-modal
+    [student]="selectedStudentDetail"
+    (close)="selectedStudentDetail = null"
+    (edit)="openEditModal($event)"
+  ></app-student-detail-modal>
+
+  <app-student-form-modal
+    *ngIf="isFormModalOpen"
+    [student]="selectedStudentEdit"
+    [isSubmitting]="isSubmittingForm"
+    (close)="closeFormModal()"
+    (save)="onSaveStudent($event)"
+  ></app-student-form-modal>
+
+  <app-delete-confirm-modal
+    [student]="selectedStudentDelete"
+    [isDeleting]="isDeleting"
+    (cancel)="selectedStudentDelete = null"
+    (confirm)="onConfirmDelete($event)"
+  ></app-delete-confirm-modal>
+
+  <!-- Floating Toast Notifications -->
+  <app-toast-container></app-toast-container>
+</div>

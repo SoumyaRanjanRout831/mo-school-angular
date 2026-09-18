@@ -1,0 +1,192 @@
+:host {
+  display: block;
+  margin-bottom: 1.75rem;
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.25rem;
+}
+
+@media (min-width: 640px) {
+  .stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 1024px) {
+  .stats-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+.stat-card {
+  padding: 1.35rem 1.5rem;
+  border-radius: var(--radius-xl);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.stat-clickable {
+  cursor: pointer;
+}
+
+.stat-clickable:hover {
+  transform: translateY(-2px);
+}
+
+.stat-body {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+}
+
+.stat-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.stat-label {
+  font-size: 0.6875rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--slate-500);
+  margin-bottom: 0.35rem;
+}
+
+.label-emerald {
+  color: #059669;
+}
+
+.label-purple {
+  color: #7c3aed;
+}
+
+.stat-value {
+  font-size: 2rem;
+  font-weight: 800;
+  color: var(--slate-900);
+  line-height: 1.1;
+  letter-spacing: -0.03em;
+}
+
+.stat-subtext {
+  font-size: 0.75rem;
+  color: var(--slate-500);
+  margin-top: 0.4rem;
+  font-weight: 500;
+}
+
+.text-emerald {
+  color: #059669;
+  font-weight: 600;
+}
+
+.stat-icon-wrapper {
+  width: 46px;
+  height: 46px;
+  border-radius: var(--radius-lg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: transform 0.2s;
+}
+
+.stat-card:hover .stat-icon-wrapper {
+  transform: scale(1.08);
+}
+
+.icon-indigo {
+  background: #eef2ff;
+  color: #4f46e5;
+}
+
+.icon-emerald {
+  background: #ecfdf5;
+  color: #059669;
+}
+
+.icon-purple {
+  background: #f5f3ff;
+  color: #7c3aed;
+}
+
+.stat-svg {
+  width: 24px;
+  height: 24px;
+}
+
+.card-bottom-accent {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  opacity: 0.7;
+}
+
+.bg-indigo { background: linear-gradient(90deg, #6366f1, #818cf8); }
+.bg-emerald { background: linear-gradient(90deg, #10b981, #34d399); }
+.bg-cyan { background: linear-gradient(90deg, #06b6d4, #38bdf8); }
+.bg-purple { background: linear-gradient(90deg, #8b5cf6, #c084fc); }
+
+/* Gender card */
+.gender-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.6rem;
+}
+
+.gender-counts {
+  font-size: 0.6875rem;
+  font-weight: 700;
+}
+
+.male-txt { color: #0284c7; }
+.female-txt { color: #e11d48; }
+
+.gender-progress-bar {
+  width: 100%;
+  height: 8px;
+  background: #f1f5f9;
+  border-radius: var(--radius-full);
+  display: flex;
+  overflow: hidden;
+  margin-bottom: 0.6rem;
+}
+
+.progress-seg {
+  height: 100%;
+  transition: width 0.4s ease;
+}
+
+.male-seg { background: linear-gradient(90deg, #0284c7, #38bdf8); }
+.female-seg { background: linear-gradient(90deg, #f43f5e, #fb7185); }
+
+.gender-footer {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.6875rem;
+  color: var(--slate-500);
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.legend-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+}
+
+.dot-male { background: #0284c7; }
+.dot-female { background: #f43f5e; }

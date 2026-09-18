@@ -1,0 +1,97 @@
+<div *ngIf="stats" class="stats-grid">
+  <!-- Card 1: Total Students -->
+  <div class="glass-card stat-card stat-total">
+    <div class="stat-body">
+      <div class="stat-info">
+        <span class="stat-label">Total Enrollment</span>
+        <h3 class="stat-value">{{ stats.totalStudents }}</h3>
+        <span class="stat-subtext">Registered Students</span>
+      </div>
+      <div class="stat-icon-wrapper icon-indigo">
+        <svg class="stat-svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+        </svg>
+      </div>
+    </div>
+    <div class="card-bottom-accent bg-indigo"></div>
+  </div>
+
+  <!-- Card 2: Active Students -->
+  <div
+    (click)="onFilterStatus('Active')"
+    class="glass-card stat-card stat-clickable stat-active"
+    title="Click to filter by Active"
+  >
+    <div class="stat-body">
+      <div class="stat-info">
+        <span class="stat-label label-emerald">Active Students</span>
+        <h3 class="stat-value">{{ stats.activeStudents }}</h3>
+        <span class="stat-subtext text-emerald">
+          {{ ((stats.activeStudents / (stats.totalStudents || 1)) * 100).toFixed(0) }}% Active Roster
+        </span>
+      </div>
+      <div class="stat-icon-wrapper icon-emerald">
+        <svg class="stat-svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+        </svg>
+      </div>
+    </div>
+    <div class="card-bottom-accent bg-emerald"></div>
+  </div>
+
+  <!-- Card 3: Gender Ratio Breakdown -->
+  <div class="glass-card stat-card stat-gender">
+    <div class="gender-header">
+      <span class="stat-label">Gender Distribution</span>
+      <span class="gender-counts">
+        <span class="male-txt">Boys {{ stats.genderBreakdown.male }}</span> &bull;
+        <span class="female-txt">Girls {{ stats.genderBreakdown.female }}</span>
+      </span>
+    </div>
+
+    <!-- Progress Bar -->
+    <div class="gender-progress-bar">
+      <div
+        class="progress-seg male-seg"
+        [style.width.%]="(stats.genderBreakdown.male / (stats.totalStudents || 1)) * 100"
+        title="Male: {{ stats.genderBreakdown.male }}"
+      ></div>
+      <div
+        class="progress-seg female-seg"
+        [style.width.%]="(stats.genderBreakdown.female / (stats.totalStudents || 1)) * 100"
+        title="Female: {{ stats.genderBreakdown.female }}"
+      ></div>
+    </div>
+
+    <div class="gender-footer">
+      <div class="legend-item"><span class="legend-dot dot-male"></span> Male ({{ ((stats.genderBreakdown.male / (stats.totalStudents || 1)) * 100).toFixed(0) }}%)</div>
+      <div class="legend-item"><span class="legend-dot dot-female"></span> Female ({{ ((stats.genderBreakdown.female / (stats.totalStudents || 1)) * 100).toFixed(0) }}%)</div>
+    </div>
+    <div class="card-bottom-accent bg-cyan"></div>
+  </div>
+
+  <!-- Card 4: Graduated & Inactive -->
+  <div
+    (click)="onFilterStatus('Graduated')"
+    class="glass-card stat-card stat-clickable stat-graduated"
+    title="Click to filter by Graduated"
+  >
+    <div class="stat-body">
+      <div class="stat-info">
+        <span class="stat-label label-purple">Alumni & Graduated</span>
+        <h3 class="stat-value">{{ stats.graduatedStudents }}</h3>
+        <span class="stat-subtext">
+          {{ stats.inactiveStudents }} Inactive &bull; {{ stats.suspendedStudents }} Suspended
+        </span>
+      </div>
+      <div class="stat-icon-wrapper icon-purple">
+        <svg class="stat-svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path d="M12 14l9-5-9-5-9 5 9 5z" />
+          <path d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z" />
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14l9-5-9-5-9 5 9 5zm0 0l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14zm-4 6v-7.5l4-2.222" />
+        </svg>
+      </div>
+    </div>
+    <div class="card-bottom-accent bg-purple"></div>
+  </div>
+</div>
