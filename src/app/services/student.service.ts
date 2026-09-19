@@ -10,13 +10,15 @@ import {
   StudentStatsSummary,
   EnrollmentStatus,
 } from '../models/student.model';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root',
 })
 export class StudentService {
   private http = inject(HttpClient);
-  private apiUrl = 'http://localhost:5000/api/v1/students';
+  private apiUrl = environment.apiUrl;
+
 
   public getAll(filters: StudentQueryFilters = {}): Observable<ApiResponse<Student[]>> {
     let params = new HttpParams();

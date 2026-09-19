@@ -1,4 +1,4 @@
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, OnInit, inject, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { StudentService } from './services/student.service';
 import { ToastService } from './services/toast.service';
@@ -38,6 +38,7 @@ import { ToastContainerComponent } from './components/toast-container/toast-cont
 export class App implements OnInit {
   private studentService = inject(StudentService);
   private toastService = inject(ToastService);
+  private cdr = inject(ChangeDetectorRef);
 
   protected students: Student[] = [];
   protected pagination: PaginationMeta | null = null;
@@ -66,16 +67,19 @@ export class App implements OnInit {
 
   protected loadStudents(): void {
     this.isLoading = true;
+    this.cdr.markForCheck();
     this.studentService.getAll(this.filters).subscribe({
       next: (res) => {
         this.students = res.data || [];
         this.pagination = res.meta || null;
         this.isLoading = false;
+        this.cdr.markForCheck();
       },
       error: (err) => {
         this.isLoading = false;
         const msg = err.error?.message || 'Failed to fetch students. Ensure the backend server is running.';
         this.toastService.error(msg, 'Connection Error');
+        this.cdr.markForCheck();
       },
     });
   }
@@ -84,9 +88,11 @@ export class App implements OnInit {
     this.studentService.getStats().subscribe({
       next: (res) => {
         this.stats = res.data || null;
+        this.cdr.markForCheck();
       },
       error: (err) => {
         console.error('Failed to load student statistics:', err);
+        this.cdr.markForCheck();
       },
     });
   }
@@ -106,30 +112,36 @@ export class App implements OnInit {
   protected openCreateModal(): void {
     this.selectedStudentEdit = null;
     this.isFormModalOpen = true;
+    this.cdr.markForCheck();
   }
 
   protected openEditModal(student: Student): void {
     this.selectedStudentDetail = null; // Close detail if open
     this.selectedStudentEdit = student;
     this.isFormModalOpen = true;
+    this.cdr.markForCheck();
   }
 
   protected openDetailModal(student: Student): void {
     this.selectedStudentDetail = student;
+    this.cdr.markForCheck();
   }
 
   protected openDeleteModal(student: Student): void {
     this.selectedStudentDelete = student;
+    this.cdr.markForCheck();
   }
 
   protected closeFormModal(): void {
     this.isFormModalOpen = false;
     this.selectedStudentEdit = null;
+    this.cdr.markForCheck();
   }
 
   // Save (Create / Update)
   protected onSaveStudent(formData: any): void {
     this.isSubmittingForm = true;
+    this.cdr.markForCheck();
 
     if (this.selectedStudentEdit) {
       // Update
@@ -141,11 +153,13 @@ export class App implements OnInit {
           this.toastService.success(`Student ${res.data?.firstName} updated successfully!`);
           this.loadStudents();
           this.loadStats();
+          this.cdr.markForCheck();
         },
         error: (err) => {
           this.isSubmittingForm = false;
           const msg = err.error?.message || 'Failed to update student profile';
           this.toastService.error(msg, 'Update Failed');
+          this.cdr.markForCheck();
         },
       });
     } else {
@@ -157,11 +171,13 @@ export class App implements OnInit {
           this.toastService.success(`Student ${res.data?.firstName} ${res.data?.lastName} enrolled successfully!`);
           this.loadStudents();
           this.loadStats();
+          this.cdr.markForCheck();
         },
         error: (err) => {
           this.isSubmittingForm = false;
           const msg = err.error?.message || 'Failed to enroll student';
           this.toastService.error(msg, 'Enrollment Failed');
+          this.cdr.markForCheck();
         },
       });
     }
@@ -177,10 +193,12 @@ export class App implements OnInit {
         );
         this.loadStudents();
         this.loadStats();
+        this.cdr.markForCheck();
       },
       error: (err) => {
         const msg = err.error?.message || 'Failed to change status';
         this.toastService.error(msg);
+        this.cdr.markForCheck();
       },
     });
   }
@@ -188,6 +206,7 @@ export class App implements OnInit {
   // Confirm Deletion
   protected onConfirmDelete(id: string): void {
     this.isDeleting = true;
+    this.cdr.markForCheck();
     this.studentService.delete(id).subscribe({
       next: () => {
         this.isDeleting = false;
@@ -198,12 +217,15 @@ export class App implements OnInit {
         this.toastService.success(`${deletedName} was permanently removed.`, 'Student Deleted');
         this.loadStudents();
         this.loadStats();
+        this.cdr.markForCheck();
       },
       error: (err) => {
         this.isDeleting = false;
         const msg = err.error?.message || 'Failed to delete student';
         this.toastService.error(msg, 'Delete Error');
+        this.cdr.markForCheck();
       },
     });
   }
 }
+

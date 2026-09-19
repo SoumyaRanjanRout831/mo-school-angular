@@ -121,19 +121,19 @@
             <div class="contact-box-list">
               <div class="contact-row">
                 <span class="c-label">Name:</span>
-                <strong class="c-val">{{ student.guardian.name }} ({{ student.guardian.relation }})</strong>
+                <strong class="c-val">{{ student.guardian?.name || 'N/A' }} ({{ student.guardian?.relation || 'Guardian' }})</strong>
               </div>
               <div class="contact-row">
                 <span class="c-label">Phone:</span>
-                <strong class="c-val font-mono">{{ student.guardian.phone }}</strong>
+                <strong class="c-val font-mono">{{ student.guardian?.phone || 'N/A' }}</strong>
               </div>
               <div class="contact-row">
                 <span class="c-label">Email:</span>
-                <span class="c-val">{{ student.guardian.email }}</span>
+                <span class="c-val">{{ student.guardian?.email || 'N/A' }}</span>
               </div>
-              <div *ngIf="student.guardian.occupation" class="contact-row">
+              <div *ngIf="student.guardian?.occupation" class="contact-row">
                 <span class="c-label">Occupation:</span>
-                <span class="c-val">{{ student.guardian.occupation }}</span>
+                <span class="c-val">{{ student.guardian?.occupation }}</span>
               </div>
             </div>
           </div>
@@ -147,15 +147,15 @@
             <div class="contact-box-list">
               <div class="contact-row">
                 <span class="c-label">Contact Person:</span>
-                <strong class="c-val">{{ student.emergencyContact.name }}</strong>
+                <strong class="c-val">{{ student.emergencyContact?.name || 'N/A' }}</strong>
               </div>
               <div class="contact-row">
                 <span class="c-label">Relationship:</span>
-                <span class="c-val">{{ student.emergencyContact.relation }}</span>
+                <span class="c-val">{{ student.emergencyContact?.relation || 'N/A' }}</span>
               </div>
               <div class="contact-row">
                 <span class="c-label">Hotline Phone:</span>
-                <strong class="c-val font-mono emergency-phone">{{ student.emergencyContact.phone }}</strong>
+                <strong class="c-val font-mono emergency-phone">{{ student.emergencyContact?.phone || 'N/A' }}</strong>
               </div>
             </div>
           </div>
@@ -171,7 +171,7 @@
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
           </svg>
           <span class="address-text">
-            {{ student.address.street }}, {{ student.address.city }}, {{ student.address.state }} &bull; {{ student.address.postalCode }}, {{ student.address.country }}
+            {{ student.address?.street }}, {{ student.address?.city }}, {{ student.address?.state }} &bull; {{ student.address?.postalCode }}, {{ student.address?.country }}
           </span>
         </div>
       </div>
